@@ -1,8 +1,9 @@
 package az.lesson.spring.customerservice.service;
 
-import az.lesson.spring.customerservice.domain.Customer;
+import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.repository.CustomerRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -48,22 +49,35 @@ public class CustomerServiceImpl  implements CustomerService{
     }
 
     @Override
-    public Customer addCustomer(Customer customer) {
-        Customer added  =  customerRepository.save(customer);
-        return  added;
+    public ResponseEntity<Customer> addCustomer(Customer customer) {
+        try {
+            Customer addedCstomer = customerRepository.save(customer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedCstomer);
+        } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) {
-        Customer updatedCustomer = customerRepository.save(customer);
-        System.out.println("updated");
-        return  updatedCustomer;
+    public ResponseEntity<Customer> updateCustomer(Customer customer) {
+        try {
+            Customer updatedCustomer = customerRepository.save(customer);
+            return ResponseEntity.ok(updatedCustomer);
+        } catch (Exception exception){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @Override
-    public void deleteCustomerById(Long id) {
-        System.out.println("deleted");
-        customerRepository.deleteById(id);
+    public ResponseEntity<String> deleteCustomerById(Long id) {
+        try {
+            customerRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Customer with ID " + id + " deleted successfully");
+        } catch (EmptyResultDataAccessException exception){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer with ID " + id + " not found");
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete customer: " + e.getMessage());
+        }
     }
 
 

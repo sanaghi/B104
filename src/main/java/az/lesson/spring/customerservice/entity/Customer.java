@@ -1,8 +1,7 @@
-package az.lesson.spring.customerservice.domain;
+package az.lesson.spring.customerservice.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
 
 @Data
 @Entity

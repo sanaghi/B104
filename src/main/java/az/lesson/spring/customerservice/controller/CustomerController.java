@@ -1,14 +1,9 @@
 package az.lesson.spring.customerservice.controller;
 
-import az.lesson.spring.customerservice.domain.Customer;
+import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.service.CustomerService;
-import az.lesson.spring.customerservice.service.CustomerServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,16 +38,16 @@ import java.util.List;
 
     @PostMapping
     public ResponseEntity<Customer> addCustomer(@RequestBody  Customer customer){
-        return  ResponseEntity.status(HttpStatus.CREATED).body(customerService.addCustomer(customer));
+        return customerService.addCustomer(customer);
     }
 
     @PutMapping
     public ResponseEntity<Customer> updateCustomer(@RequestBody  Customer customer){
-        return  ResponseEntity.ok(customerService.updateCustomer(customer));
+        return  customerService.updateCustomer(customer);
     }
 
     @DeleteMapping("/{id}")
-    public  void deleteCustomer(@PathVariable Long id){
-        customerService.deleteCustomerById(id);
+    public  ResponseEntity<String> deleteCustomer(@PathVariable Long id){
+        return  customerService.deleteCustomerById(id);
     }
 }
