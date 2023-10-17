@@ -7,20 +7,13 @@ import java.util.List;
 
 @Data
 @Entity
-public class Customer {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
+    private  String name;
     @OneToMany
-    private List<EmailAddress> emailAddresses;
+    private List<Product> product;
 
-    private  String passwordHash;
-    private  Long  personId;
-    private  Long shippingAddressId;
-    private  Long billingAddressId;
-
-
-    public Customer() {
-    }
 }
