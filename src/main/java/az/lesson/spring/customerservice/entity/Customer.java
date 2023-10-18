@@ -1,7 +1,9 @@
 package az.lesson.spring.customerservice.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -19,7 +21,8 @@ public class Customer {
     private  Long  personId;
     private  Long shippingAddressId;
     private  Long billingAddressId;
-
+    private Double debt;
+    private String name;
 
     public Customer() {
     }

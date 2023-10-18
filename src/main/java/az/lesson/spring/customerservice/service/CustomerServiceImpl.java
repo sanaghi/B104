@@ -40,12 +40,14 @@ public class CustomerServiceImpl  implements CustomerService{
 
     @Override
     public List<Customer> getCustomersByDebt(Double debt) {
-        return customerRepository.getCustomersByDebt(debt);
+//        return customerRepository.getCustomersByDebt(debt);
+        return null;
     }
 
     @Override
     public List<Customer> getCustomersByDebtAndNameAndSurname(Double debt, String name, String surName) {
-        return customerRepository.getCustomerByDebtAndNameAndSurName(debt,name,surName);
+//        return customerRepository.getCustomerByDebtAndNameAndSurN
+        return  null;
     }
 
     @Override

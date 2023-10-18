@@ -4,16 +4,18 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    Long customerId;
+
+    private  Long customerId;
 
     @Temporal(TemporalType.DATE)
     private Date orderDate;
@@ -32,6 +34,8 @@ public class Order {
     private  Long accountId;
     private  Integer shipAdddressId;
     private  Integer billingAdddressId;
+    @OneToMany
+    List<OrderItem> orderItems;
 
 
 
