@@ -34,8 +34,11 @@ public class Orders {
     private  Long accountId;
     private  Integer shipAdddressId;
     private  Integer billingAdddressId;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     List<OrderItem> orderItems;
+
+    @ManyToOne
+    OrderStatus orderStatus;
 
 
 

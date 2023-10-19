@@ -1,10 +1,9 @@
 package az.lesson.spring.customerservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -22,4 +21,7 @@ public class Address {
     private  Integer subStreetId;
     private  Integer buildingId;
     private  Integer homeId;
+
+    @OneToMany(mappedBy = "address")
+    private List<CustomerAddress> customers;
 }
