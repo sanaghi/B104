@@ -1,6 +1,7 @@
 package az.lesson.spring.customerservice.entity;
 
 import az.lesson.spring.customerservice.AddressType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class CustomerAddress {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

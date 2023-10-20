@@ -32,7 +32,6 @@ public class Orders {
     private  Long shipAddressId;
 
     private  Long accountId;
-    private  Integer shipAdddressId;
     private  Integer billingAdddressId;
     @OneToMany(mappedBy = "order")
     List<OrderItem> orderItems;

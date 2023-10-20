@@ -1,5 +1,6 @@
 package az.lesson.spring.customerservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -28,10 +29,12 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
-    @Where(clause = "address_tye = 'BILLING' ")
+    @JsonManagedReference
+    @Where(clause = "address_type = 'BILLING' ")
     private List<CustomerAddress> billingAddresses ;
 
-    @Where(clause = "address_tye = 'SHIPPING' ")
+    @Where(clause = "address_type = 'SHIPPING' ")
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer")
     @Fetch(FetchMode.JOIN)
     private List<CustomerAddress> shippingAddresses;
