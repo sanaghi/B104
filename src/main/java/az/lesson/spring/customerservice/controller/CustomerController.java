@@ -38,6 +38,7 @@ import java.util.List;
 
     @PostMapping
     public ResponseEntity<Customer> addCustomer(@RequestBody  Customer customer){
+        System.out.println(customer);
         return customerService.addCustomer(customer);
     }
 

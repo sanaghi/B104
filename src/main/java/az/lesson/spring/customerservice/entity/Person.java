@@ -1,5 +1,6 @@
 package az.lesson.spring.customerservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -23,13 +24,13 @@ public class Person {
     @Temporal(TemporalType.DATE)
     Date birhDate;
 
+    @JsonIgnore
     String gender;
+
+    @JsonIgnore
     Integer height;
 
     @Column(name = "finCode" , nullable = false,unique = true)
     String finCode;
 
-
-//    @OneToOne(mappedBy = "person")
-//    private Customer customer;
 }

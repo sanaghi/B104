@@ -1,6 +1,6 @@
 package az.lesson.spring.customerservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -13,6 +13,20 @@ import java.util.List;
 
 @Data
 @Entity
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
+//@NamedEntityGraph(
+//        name = "Customer.address",
+//        attributeNodes = {
+//                @NamedAttributeNode(value = "billingAddresses", subgraph = "billingAddressesSubgraph")
+//        },
+//        subgraphs = {
+//                @NamedSubgraph(name = "billingAddressesSubgraph", attributeNodes = {
+//                        @NamedAttributeNode("address")
+//                })
+//        }
+//)
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +41,15 @@ public class Customer {
     @JoinColumn(name = "personFinCode",referencedColumnName = "finCode")
     private  Person  person;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
-    @JsonManagedReference
     @Where(clause = "address_type = 'BILLING' ")
     private List<CustomerAddress> billingAddresses ;
 
     @Where(clause = "address_type = 'SHIPPING' ")
     @JsonManagedReference
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
     private List<CustomerAddress> shippingAddresses;
 

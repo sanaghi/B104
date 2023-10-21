@@ -2,6 +2,7 @@ package az.lesson.spring.customerservice.service;
 
 import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.repository.CustomerRepository;
+import az.lesson.spring.customerservice.repository.PersonRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,11 @@ import java.util.Optional;
 @Primary
 public class CustomerServiceImpl  implements CustomerService{
     CustomerRepository customerRepository;
+    PersonService personService;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, PersonService personService) {
         this.customerRepository = customerRepository;
+        this.personService = personService;
     }
 
     @Override
@@ -53,6 +56,7 @@ public class CustomerServiceImpl  implements CustomerService{
     @Override
     public ResponseEntity<Customer> addCustomer(Customer customer) {
         try {
+            customer.setPerson(personService.createPerson(customer.getPerson()));
             Customer addedCstomer = customerRepository.save(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedCstomer);
         } catch (Exception ex){

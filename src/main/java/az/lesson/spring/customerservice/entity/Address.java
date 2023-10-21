@@ -1,5 +1,7 @@
 package az.lesson.spring.customerservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,5 +25,6 @@ public class Address {
     private  Integer homeId;
 
     @OneToMany(mappedBy = "address")
+    @JsonManagedReference
     private List<CustomerAddress> customers;
 }
