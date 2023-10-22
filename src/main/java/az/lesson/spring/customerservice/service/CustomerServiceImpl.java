@@ -56,7 +56,7 @@ public class CustomerServiceImpl  implements CustomerService{
     @Override
     public ResponseEntity<Customer> addCustomer(Customer customer) {
         try {
-            customer.setPerson(personService.createPerson(customer.getPerson()));
+//            customer.setPerson(personService.createPerson(customer.getPerson()));
             Customer addedCstomer = customerRepository.save(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedCstomer);
         } catch (Exception ex){

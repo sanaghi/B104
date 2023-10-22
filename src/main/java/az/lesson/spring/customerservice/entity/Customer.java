@@ -37,18 +37,20 @@ public class Customer {
 
     private  String passwordHash;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personFinCode",referencedColumnName = "finCode")
     private  Person  person;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "BILLING_ADDRESS")
+    @JsonIgnore
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
     @Where(clause = "address_type = 'BILLING' ")
     private List<CustomerAddress> billingAddresses ;
 
     @Where(clause = "address_type = 'SHIPPING' ")
-    @JsonManagedReference
+    @JsonIgnore
+    @JsonManagedReference("SHIPPING_ADDRESS")
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
     private List<CustomerAddress> shippingAddresses;
