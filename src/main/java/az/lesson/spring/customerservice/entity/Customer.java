@@ -42,14 +42,14 @@ public class Customer {
     private  Person  person;
 
     @JsonManagedReference(value = "BILLING_ADDRESS")
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
     @Where(clause = "address_type = 'BILLING' ")
     private List<CustomerAddress> billingAddresses ;
 
     @Where(clause = "address_type = 'SHIPPING' ")
-    @JsonIgnore
+//    @JsonIgnore
     @JsonManagedReference("SHIPPING_ADDRESS")
     @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @Fetch(FetchMode.JOIN)
