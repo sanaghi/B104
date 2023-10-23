@@ -33,6 +33,7 @@ import java.util.List;
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomer(){
+        int a = 9/0;
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 

@@ -22,11 +22,10 @@ public class CustomerAddress {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)//,cascade = CascadeType.ALL
     @JsonBackReference
     @JoinColumn(name = "address_id")
     @OrderBy("id desc ")
-    @JsonMerge
     @Fetch(FetchMode.JOIN)
     private Address address;
 
