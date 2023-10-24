@@ -1,14 +1,15 @@
-package az.lesson.spring.customerservice;
+package az.lesson.spring.customerservice.aop;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 public class LogAspect {
+    private  static  final Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
+
 
     @Before("execution(public * az.lesson.spring.customerservice.controller.CustomerController.getAllCustomer())")
     public void log(){
@@ -19,8 +20,14 @@ public class LogAspect {
     public void logReturning(){
         System.out.println("getAllCustomer returned ");
     }
+
     @AfterThrowing("execution(public * az.lesson.spring.customerservice.controller.CustomerController.getAllCustomer())")
     public void logThrowing(){
-        System.out.println(" insident happens ");
+        LOGGER.info("Aspect execution AfterThrowing  ");
+    }
+
+    @After("execution(public * az.lesson.spring.customerservice.controller.CustomerController.getAllCustomer())")
+    public void logAfter(){
+        LOGGER.info("Aspect execution After");
     }
 }
