@@ -8,19 +8,22 @@ import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 @Aspect
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecondLogAspect {
 
-    private  static  final  Logger  LOGGER = LoggerFactory.getLogger(SecondLogAspect.class);
+    private  static  final  Logger  LOGGER = LoggerFactory.getLogger("alma ");
 
     @Around("execution(* az.lesson.spring.customerservice.service.*.*(..))")
-    public Object   log(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object   alma(ProceedingJoinPoint joinPoint) throws Throwable {
         String methodName =
         joinPoint.getSignature().getName();
         Object [] arguments = joinPoint.getArgs();
@@ -28,8 +31,9 @@ public class SecondLogAspect {
         LOGGER.info("Method " + methodName +
                 " with parameters " + Arrays.asList(arguments) +
                         " will execute");
-
-        Object returnedByMethod =   joinPoint.proceed();
+        long id = 5;
+        Object [] argumentsProxy = {id};
+        Object returnedByMethod =   joinPoint.proceed(argumentsProxy);
 
         LOGGER.info("Method executed and returned " + returnedByMethod);
 

@@ -3,6 +3,8 @@ package az.lesson.spring.customerservice.aop;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,10 +13,20 @@ public class LogAspect {
     private  static  final Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
 
 
-    @Before("execution(public * az.lesson.spring.customerservice.controller.CustomerController.getAllCustomer())")
-    public void log(){
-        System.out.println("getAllCustomer executed");
+    @Pointcut("execution(* az.lesson.spring.customerservice.service.*.*(..))")
+    public void logPointcut(){
+        LOGGER.info("LogAspect  before advice");
     }
+
+    @Before("logPointcut()")
+    public void logPointCutCalled(){
+
+    }
+    @After("logPointcut()")
+    public void logPointCutCalledAfter(){
+
+    }
+
 
     @AfterReturning("execution(public * az.lesson.spring.customerservice.controller.CustomerController.getAllCustomer())")
     public void logReturning(){
