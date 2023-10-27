@@ -2,7 +2,6 @@ package az.lesson.spring.customerservice.service;
 
 import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.repository.CustomerRepository;
-import az.lesson.spring.customerservice.repository.PersonRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -33,11 +32,12 @@ public class CustomerServiceImpl  implements CustomerService{
     @Override
     public ResponseEntity<Customer> getCustomerById(Long id) {
         Optional<Customer> customer = customerRepository.findById(id);
+
         System.out.println("getCustomerById");
         if(customer.isPresent()){
            return  ResponseEntity.ok(customer.get());
         }else {
-           return  ResponseEntity.notFound().build();
+           return  new ResponseEntity<Customer>(new Customer(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

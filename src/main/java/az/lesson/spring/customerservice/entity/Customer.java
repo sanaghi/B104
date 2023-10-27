@@ -2,6 +2,7 @@ package az.lesson.spring.customerservice.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -33,6 +34,8 @@ public class Customer {
     private  Long id;
 
 
+    @Email(message = "Zəhmət olmasa doğru email formatı daxil edin")
+    @Size(min = 7,max = 40)
     private String emailAddress;
 
     private  String passwordHash;
@@ -41,20 +44,24 @@ public class Customer {
     @JoinColumn(name = "personFinCode",referencedColumnName = "finCode")
     private  Person  person;
 
-    @JsonManagedReference(value = "BILLING_ADDRESS")
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @Fetch(FetchMode.JOIN)
-    @Where(clause = "address_type = 'BILLING' ")
-    private List<CustomerAddress> billingAddresses ;
+//    @JsonManagedReference(value = "BILLING_ADDRESS")
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+//    @Fetch(FetchMode.JOIN)
+//    @Where(clause = "address_type = 'BILLING' ")
+//    private List<CustomerAddress> billingAddresses ;
+//
+//    @Where(clause = "address_type = 'SHIPPING' ")
+//    @JsonIgnore
+//    @JsonManagedReference("SHIPPING_ADDRESS")
+//    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+//    @Fetch(FetchMode.JOIN)
+//    private List<CustomerAddress> shippingAddresses;
 
-    @Where(clause = "address_type = 'SHIPPING' ")
-    @JsonIgnore
-    @JsonManagedReference("SHIPPING_ADDRESS")
-    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-    @Fetch(FetchMode.JOIN)
-    private List<CustomerAddress> shippingAddresses;
 
+    @NotNull(message = "Borc məbləği boş ola bilməz")
+    @Min(value = 1,message = "1 AZN dən kiçik ödənişlər qəbul olunmur")
+    @Max(value = 200, message = "maksimal ödəniş 200 AZN")
     private Double debt;
     private String name;
 

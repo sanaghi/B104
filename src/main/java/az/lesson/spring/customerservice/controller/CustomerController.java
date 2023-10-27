@@ -2,6 +2,7 @@ package az.lesson.spring.customerservice.controller;
 
 import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ import java.util.List;
     }
 
     @PostMapping
-    public ResponseEntity<Customer> addCustomer(@RequestBody  Customer customer){
+    public ResponseEntity<Customer> addCustomer(@Valid  @RequestBody  Customer customer){
         System.out.println(customer);
         return customerService.addCustomer(customer);
     }
