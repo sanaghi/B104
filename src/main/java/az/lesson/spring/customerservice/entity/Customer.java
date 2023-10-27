@@ -1,7 +1,9 @@
 package az.lesson.spring.customerservice.entity;
 
+import az.lesson.spring.customerservice.validation.ValidFinCode;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -36,12 +38,24 @@ public class Customer {
 
     @Email(message = "Zəhmət olmasa doğru email formatı daxil edin")
     @Size(min = 7,max = 40)
+    @NotNull
     private String emailAddress;
 
+    @Min(15)
+    @Max(200)
+    private  Integer age;
+
+
+//
+//    @ValidFinCode
+//    private  String finNomre;
+
+    @NotNull
     private  String passwordHash;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personFinCode",referencedColumnName = "finCode")
+    @Valid
     private  Person  person;
 
 //    @JsonManagedReference(value = "BILLING_ADDRESS")

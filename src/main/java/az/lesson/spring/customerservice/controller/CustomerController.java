@@ -39,7 +39,7 @@ import java.util.List;
     }
 
     @PostMapping
-    public ResponseEntity<Customer> addCustomer(@Valid  @RequestBody  Customer customer){
+    public ResponseEntity<Customer> addCustomer( @Valid @RequestBody  Customer customer){
         System.out.println(customer);
         return customerService.addCustomer(customer);
     }

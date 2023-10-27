@@ -1,5 +1,6 @@
 package az.lesson.spring.customerservice.entity;
 
+import az.lesson.spring.customerservice.validation.ValidFinCode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -30,6 +31,8 @@ public class Person {
     @JsonIgnore
     Integer height;
 
+
+    @ValidFinCode
     @Column(name = "finCode" , nullable = false,unique = true)
     String finCode;
 

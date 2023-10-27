@@ -1,6 +1,8 @@
 package az.lesson.spring.customerservice.service;
 
 import az.lesson.spring.customerservice.entity.Customer;
+import az.lesson.spring.customerservice.enums.ErrorMessages;
+import az.lesson.spring.customerservice.exception.CustomerNotFoundException;
 import az.lesson.spring.customerservice.repository.CustomerRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,7 +39,7 @@ public class CustomerServiceImpl  implements CustomerService{
         if(customer.isPresent()){
            return  ResponseEntity.ok(customer.get());
         }else {
-           return  new ResponseEntity<Customer>(new Customer(), HttpStatus.INTERNAL_SERVER_ERROR);
+           throw new CustomerNotFoundException(ErrorMessages.CUSTOMER_NOT_FOUND.getMessage());
         }
     }
 
@@ -55,6 +57,7 @@ public class CustomerServiceImpl  implements CustomerService{
 
     @Override
     public ResponseEntity<Customer> addCustomer(Customer customer) {
+        System.out.println("customer in service "+customer);
         try {
 //            customer.setPerson(personService.createPerson(customer.getPerson()));
             Customer addedCstomer = customerRepository.save(customer);
