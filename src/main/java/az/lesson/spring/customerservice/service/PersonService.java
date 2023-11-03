@@ -4,6 +4,8 @@ import az.lesson.spring.customerservice.entity.Person;
 import az.lesson.spring.customerservice.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PersonService {
@@ -12,9 +14,14 @@ public class PersonService {
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
-
     public Person createPerson(Person person) {
-        return personRepository.save(person);
+        System.out.println("---------"+personRepository.existsByFinCode(person.getFinCode()));
+        if(!personRepository.existsByFinCode(person.getFinCode())) {
+            return personRepository.save(person);
+        } else {
+
+            throw  new RuntimeException("already exist");
+        }
     }
 
     public Person getPersonById(Long id) {

@@ -77,7 +77,10 @@ public class Customer {
     @Min(value = 1,message = "1 AZN dən kiçik ödənişlər qəbul olunmur")
     @Max(value = 200, message = "maksimal ödəniş 200 AZN")
     private Double debt;
+
+    @Transient
     private String name;
+
 
     public Customer() {
     }

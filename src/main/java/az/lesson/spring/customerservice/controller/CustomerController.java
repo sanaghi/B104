@@ -1,7 +1,9 @@
 package az.lesson.spring.customerservice.controller;
 
+import az.lesson.spring.customerservice.dto.CustomerDTO;
 import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.service.CustomerService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import java.util.List;
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<Customer> getCustomerById(@PathVariable  Long id){
+    public  ResponseEntity<CustomerDTO> getCustomerById(@PathVariable  Long id){
         return  customerService.getCustomerById(id);
     }
 

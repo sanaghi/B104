@@ -22,23 +22,23 @@ public class SecondLogAspect {
 
     private  static  final  Logger  LOGGER = LoggerFactory.getLogger("alma ");
 
-    @Around("execution(* az.lesson.spring.customerservice.service.*.*(..))")
-    public Object   alma(ProceedingJoinPoint joinPoint) throws Throwable {
-        String methodName =
-        joinPoint.getSignature().getName();
-        Object [] arguments = joinPoint.getArgs();
-
-        LOGGER.info("Method " + methodName +
-                " with parameters " + Arrays.asList(arguments) +
-                        " will execute");
-        long id = 5;
-        Object [] argumentsProxy = {id};
-        Object returnedByMethod =   joinPoint.proceed(argumentsProxy);
-
-        LOGGER.info("Method executed and returned " + returnedByMethod);
-
-        return returnedByMethod;
-    }
+//    @Around("execution(* az.lesson.spring.customerservice.service.*.*(..))")
+//    public Object   alma(ProceedingJoinPoint joinPoint) throws Throwable {
+//        String methodName =
+//        joinPoint.getSignature().getName();
+//        Object [] arguments = joinPoint.getArgs();
+//
+//        LOGGER.info("Method " + methodName +
+//                " with parameters " + Arrays.asList(arguments) +
+//                        " will execute");
+//        long id = 5;
+//        Object [] argumentsProxy = {id};
+//        Object returnedByMethod =   joinPoint.proceed(argumentsProxy);
+//
+//        LOGGER.info("Method executed and returned " + returnedByMethod);
+//
+//        return returnedByMethod;
+//    }
 
     @Before("execution(* az.lesson.spring.customerservice.service.*.*(..))")
     public void  log() {
