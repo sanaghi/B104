@@ -47,7 +47,7 @@ import java.util.List;
     }
 
     @PutMapping
-    public ResponseEntity<Customer> updateCustomer(@RequestBody  Customer customer){
+    public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody  Customer customer){
         return  customerService.updateCustomer(customer);
     }
 

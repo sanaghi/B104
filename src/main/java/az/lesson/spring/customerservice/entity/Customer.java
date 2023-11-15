@@ -1,20 +1,24 @@
 package az.lesson.spring.customerservice.entity;
 
-import az.lesson.spring.customerservice.validation.ValidFinCode;
+import az.lesson.spring.customerservice.enums.Role;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Data
+@Builder
 @Entity
 //@JsonIdentityInfo(
 //        generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -30,7 +34,7 @@ import java.util.List;
 //                })
 //        }
 //)
-public class Customer {
+public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
@@ -39,7 +43,8 @@ public class Customer {
     @Email(message = "Zəhmət olmasa doğru email formatı daxil edin")
     @Size(min = 7,max = 40)
     @NotNull
-    private String emailAddress;
+    @Column(unique = true)
+    private String email;
 
     @Min(15)
     @Max(200)
@@ -50,27 +55,29 @@ public class Customer {
 //    @ValidFinCode
 //    private  String finNomre;
 
-    @NotNull
-    private  String passwordHash;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personFinCode",referencedColumnName = "finCode")
     @Valid
     private  Person  person;
 
-//    @JsonManagedReference(value = "BILLING_ADDRESS")
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-//    @Fetch(FetchMode.JOIN)
-//    @Where(clause = "address_type = 'BILLING' ")
-//    private List<CustomerAddress> billingAddresses ;
+    @JsonManagedReference(value = "BILLING_ADDRESS")
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @Fetch(FetchMode.JOIN)
+    @Where(clause = "address_type = 'BILLING' ")
+    private List<CustomerAddress> billingAddresses ;
 //
-//    @Where(clause = "address_type = 'SHIPPING' ")
-//    @JsonIgnore
-//    @JsonManagedReference("SHIPPING_ADDRESS")
-//    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
-//    @Fetch(FetchMode.JOIN)
-//    private List<CustomerAddress> shippingAddresses;
+    @Where(clause = "address_type = 'SHIPPING' ")
+    @JsonIgnore
+    @JsonManagedReference("SHIPPING_ADDRESS")
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @Fetch(FetchMode.JOIN)
+    private List<CustomerAddress> shippingAddresses;
 
 
     @NotNull(message = "Borc məbləği boş ola bilməz")
@@ -83,5 +90,36 @@ public class Customer {
 
 
     public Customer() {
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        // email in our case
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

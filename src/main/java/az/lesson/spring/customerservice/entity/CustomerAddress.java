@@ -1,6 +1,6 @@
 package az.lesson.spring.customerservice.entity;
 
-import az.lesson.spring.customerservice.AddressType;
+import az.lesson.spring.customerservice.enums.AddressType;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;

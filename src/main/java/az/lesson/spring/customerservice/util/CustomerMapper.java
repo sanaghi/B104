@@ -9,7 +9,7 @@ public class CustomerMapper {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setAge(customer.getAge());
         customerDTO.setDebt(customer.getDebt());
-        customerDTO.setEmailAddress(customer.getEmailAddress());
+        customerDTO.setEmailAddress(customer.getEmail());
         customerDTO.setId(customer.getId());
         return  customerDTO;
     }

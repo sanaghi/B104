@@ -7,9 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRepository  extends JpaRepository<Customer,Long> {
+    Optional<Customer> findByEmail(String email);
 
 //    @Query( nativeQuery = true, value = "select c.name from customer c where id = :id ");
 //    String getCustomerName(@Param("id") Long id);
