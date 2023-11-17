@@ -50,8 +50,21 @@ public class Customer implements UserDetails {
     @Max(200)
     private  Integer age;
 
+    public Customer(Long id, String email, Integer age, String password, Role role, Person person, List<CustomerAddress> billingAddresses, List<CustomerAddress> shippingAddresses, Double debt, String name) {
+        this.id = id;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        this.role = role;
+        this.person = person;
+        this.billingAddresses = billingAddresses;
+        this.shippingAddresses = shippingAddresses;
+        this.debt = debt;
+        this.name = name;
+    }
 
-//
+
+    //
 //    @ValidFinCode
 //    private  String finNomre;
 

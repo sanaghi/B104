@@ -13,10 +13,10 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e){
-        return new ResponseEntity<>("Daxili səhv ",HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<String> handleException(Exception e){
+//        return new ResponseEntity<>("Daxili səhv ",HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<String> handleCustomerException(Exception e){
         return new ResponseEntity<>(ErrorMessages.CUSTOMER_NOT_FOUND.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);

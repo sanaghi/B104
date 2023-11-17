@@ -17,7 +17,7 @@ import java.util.Arrays;
 @EnableAspectJAutoProxy
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecondLogAspect {
 
     private  static  final  Logger  LOGGER = LoggerFactory.getLogger("alma ");
