@@ -7,11 +7,14 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@EnableMethodSecurity
 @RequestMapping("/api/customer")
   public class CustomerController {
     CustomerService customerService;
@@ -51,6 +54,7 @@ import java.util.List;
         return  customerService.updateCustomer(customer);
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/{id}")
     public  ResponseEntity<String> deleteCustomer(@PathVariable Long id){
         return  customerService.deleteCustomerById(id);

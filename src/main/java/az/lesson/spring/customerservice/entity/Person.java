@@ -28,9 +28,9 @@ public class Person {
     @JsonIgnore
     String gender;
 
+    @Transient
     @JsonIgnore
     Integer height;
-
 
     @ValidFinCode
     @Column(name = "finCode" , nullable = false,unique = true)
