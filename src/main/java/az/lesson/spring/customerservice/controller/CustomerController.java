@@ -54,7 +54,7 @@ import java.util.List;
         return  customerService.updateCustomer(customer);
     }
 
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public  ResponseEntity<String> deleteCustomer(@PathVariable Long id){
         return  customerService.deleteCustomerById(id);

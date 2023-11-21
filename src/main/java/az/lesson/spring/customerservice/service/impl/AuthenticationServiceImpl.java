@@ -2,6 +2,7 @@ package az.lesson.spring.customerservice.service.impl;
 
 import az.lesson.spring.customerservice.dao.request.SigninRequest;
 import az.lesson.spring.customerservice.dao.response.JwtAuthenticationResponse;
+import az.lesson.spring.customerservice.dto.CustomerDTO;
 import az.lesson.spring.customerservice.entity.Customer;
 import az.lesson.spring.customerservice.enums.Role;
 import az.lesson.spring.customerservice.repository.CustomerRepository;
@@ -24,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse signup(Customer request) {
         var user = Customer.builder().age(request.getAge()).person(request.getPerson())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword())).debt(request.getDebt())
-                .role(Role.USER).build();
+                .role(Role.valueOf(request.getRole().toString())).build();
         customerRepository.save(user);
 
         var jwt = jwtService.generateToken(user);
